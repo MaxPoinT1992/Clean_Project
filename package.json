@@ -1,11 +1,16 @@
 {
-  "private":true,
+  "private": true,
   "scripts": {
     "start": "webpack server",
-    "watch":"webpack --watch",
-    "build":"webpack"
+    "watch": "webpack --watch",
+    "build": "cross-env NODE_ENV=production webpack",
+    "build-dev": "webpack"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "babel-loader": "^8.2.5",
+    "cross-env": "^7.0.3",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0"
