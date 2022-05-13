@@ -20,7 +20,7 @@ module.exports = {
             },
             
             {
-            test:/\.js$/, //allow .js be used by babel.
+            test:/\.jsx?$/, //allow .js be used by babel.
             exclude: /node_modules/, //prevents babel from checking this folder.
             use:{
                 loader: "babel-loader" 
@@ -29,6 +29,10 @@ module.exports = {
     },
 
     plugins: [new MiniCssExtractPlugin()],
+
+    resolve: {
+        extensions:[".js",".jsx"]
+    },
 
     devtool:"source-map",
     devServer: {
