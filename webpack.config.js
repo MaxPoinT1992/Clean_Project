@@ -34,7 +34,7 @@ module.exports = {
         type: "asset",
         parser: {
           dataUrlCondition: {
-            maxSize: 30,
+            maxSize: 30 * 1024,
           },
         },
       },
