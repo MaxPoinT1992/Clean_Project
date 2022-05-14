@@ -1,4 +1,8 @@
+const path = require("path");
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 let mode = "development";
 
@@ -10,6 +14,7 @@ module.exports = {
   mode: mode,
 
   output: {
+    path: path.resolve(__dirname, "dist"), //for the "CleanWebpackPlugin" to know what path to clean when building
     assetModuleFilename: "images/[hash][ext][query]", //put images in a folder called "images" when building to production
   },
 
@@ -29,7 +34,7 @@ module.exports = {
         type: "asset",
         parser: {
           dataUrlCondition: {
-            maxSize: 30 * 1024,
+            maxSize: 30,
           },
         },
       },
@@ -44,7 +49,11 @@ module.exports = {
     ],
   },
 
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+  ],
 
   resolve: {
     extensions: [".js", ".jsx"],
