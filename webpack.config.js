@@ -1,42 +1,58 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-let mode = "development"
+let mode = "development";
 
-if (process.env.NODE_ENV === "production"){
-
-    mode = "production"
-
+if (process.env.NODE_ENV === "production") {
+  mode = "production";
 }
-
 
 module.exports = {
-    mode:mode,
+  mode: mode,
 
-    module:{
-        rules:[
-            {
-                test: /\.(s[ac]|c)ss$/,
-                use:[MiniCssExtractPlugin.loader,"css-loader", "postcss-loader","sass-loader"] //allows CSS ,SCSS and postCSS support
-            },
-            
-            {
-            test:/\.jsx?$/, //allow .js be used by babel.
-            exclude: /node_modules/, //prevents babel from checking this folder.
-            use:{
-                loader: "babel-loader" 
-            }
-        }]
-    },
+  output: {
+    assetModuleFilename: "images/[hash][ext][query]", //put images in a folder called "images" when building to production
+  },
 
-    plugins: [new MiniCssExtractPlugin()],
+  module: {
+    rules: [
+      {
+        test: /\.(s[ac]|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
+        ], //allows CSS ,SCSS and postCSS support
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 30 * 1024,
+          },
+        },
+      },
 
-    resolve: {
-        extensions:[".js",".jsx"]
-    },
+      {
+        test: /\.jsx?$/, //allow .js be used by babel.
+        exclude: /node_modules/, //prevents babel from checking this folder.
+        use: {
+          loader: "babel-loader",
+        },
+      },
+    ],
+  },
 
-    devtool:"source-map",
-    devServer: {
-        static: "./dist",
-        hot:true    //shows changes on the project without refreshing it.
-    }
-}
+  plugins: [new MiniCssExtractPlugin()],
+
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
+
+  devtool: "source-map",
+  devServer: {
+    static: "./dist",
+    hot: true, //shows changes on the project without refreshing it.
+  },
+};
