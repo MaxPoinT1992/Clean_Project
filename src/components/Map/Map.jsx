@@ -2,6 +2,7 @@ import GoogleMapReact from "google-map-react";
 
 import { Paper, Typography, useMediaQuery, Rating } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import mapStyles from "./mapStyles";
 
 import { Styles, GoogleMapsWrapper, MarkerContainer } from "./styles";
 
@@ -11,6 +12,7 @@ function Map({
   coordinates,
   places,
   setChildClicked,
+  weatherData,
 }) {
   const isDesktop = useMediaQuery("(min-width:600px)");
 
@@ -18,12 +20,16 @@ function Map({
     <GoogleMapsWrapper>
       <GoogleMapReact
         bootstrapURLKeys={{
-          key: "AIzaSyCXD0uwY61G0xTY1bIRzzmJJJPemzpjCN0",
+          key: process.env.REACT_APP_GOOGLE_MAPS_API,
         }}
         center={coordinates}
         defaultZoom={15}
         margin={[50, 50, 50, 50]}
-        options={""}
+        options={{
+          disableDefaultUI: true,
+          zoomControl: true,
+          styles: mapStyles,
+        }}
         onChange={(e) => {
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
@@ -52,6 +58,14 @@ function Map({
               </Paper>
             )}
           </MarkerContainer>
+        ))}
+        {weatherData?.list?.map((data, i) => (
+          <div key={i} lat={data.coord.lat} lng={data.coord.lon}>
+            <img
+              src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+              height="70px"
+            />
+          </div>
         ))}
       </GoogleMapReact>
     </GoogleMapsWrapper>
