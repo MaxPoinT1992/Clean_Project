@@ -12,9 +12,15 @@ import {
 import { Styles } from "./styles";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-function List({ places, childClicked, isLoading }) {
-  const [type, setType] = useState("restaurants");
-  const [rating, setRating] = useState(0);
+function List({
+  places,
+  childClicked,
+  isLoading,
+  type,
+  setType,
+  rating,
+  setRating,
+}) {
   const [elRefs, setElRefs] = useState([]);
 
   useEffect(() => {
