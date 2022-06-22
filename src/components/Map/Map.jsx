@@ -18,7 +18,6 @@ function Map({
     <GoogleMapsWrapper>
       <GoogleMapReact
         bootstrapURLKeys={{
-          // remove the key if you want to fork
           key: "AIzaSyCXD0uwY61G0xTY1bIRzzmJJJPemzpjCN0",
         }}
         center={coordinates}
